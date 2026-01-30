@@ -1,0 +1,8 @@
+# Fun-ASR 语音识别库依赖
+torch>=2.0.0
+torchaudio>=2.0.0
+transformers>=4.40.0
+funasr>=1.3.0
+zhconv
+soundfile
+numpy
