@@ -1,8 +1,17 @@
-# Fun-ASR 语音识别库依赖
+# Agent Tools 依赖
+# 建议使用 Python 3.12 环境
+
+# 基础依赖
 torch>=2.0.0
 torchaudio>=2.0.0
 transformers>=4.40.0
-funasr>=1.3.0
-zhconv
 soundfile
 numpy
+
+# ASR 语音识别依赖
+funasr>=1.3.0
+zhconv
+
+# TTS 语音合成依赖
+qwen-tts>=0.0.5
+modelscope
