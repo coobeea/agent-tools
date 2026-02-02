@@ -16,3 +16,12 @@ openai-whisper
 # TTS 语音合成依赖
 qwen-tts>=0.0.5
 modelscope
+
+# OCR 光学字符识别依赖（需要 CUDA GPU）
+pdf2image
+pillow
+addict
+easydict
+matplotlib
+torchvision
+timm

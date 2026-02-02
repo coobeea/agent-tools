@@ -1,6 +1,6 @@
 # Agent Tools
 
-AI Agent 工具集，包含语音识别（ASR）和语音合成（TTS）模块。
+AI Agent 工具集，包含语音识别（ASR）、语音合成（TTS）和光学字符识别（OCR）模块。
 
 ## 模块
 
@@ -44,6 +44,38 @@ tts.speak("你好，世界！", speaker="Vivian", output_path="output.wav")
 
 详细文档: [tts/README.md](tts/README.md)
 
+### OCR - 光学字符识别 ⚠️
+
+基于 [DeepSeek-OCR-2](https://modelscope.cn/models/deepseek-ai/DeepSeek-OCR-2) 的文字识别模块。
+
+**⚠️ 重要**: 
+- 需要 `transformers==4.46.3`（与 TTS 的 4.57.3 冲突）
+- 建议为 OCR 创建独立环境
+- 官方模型需要修复才能在 CPU/MPS 上运行
+
+**特性:**
+- 图像 OCR 识别
+- PDF 文档识别
+- 文档转 Markdown
+- 图表解析
+- 批量处理
+
+```python
+from ocr import DeepSeekOCR
+
+# 使用本地已修复的模型
+ocr = DeepSeekOCR(use_local_model=True)
+result = ocr.recognize("document.jpg", prompt_type="markdown")
+print(result)
+```
+
+详细文档: [ocr/README.md](ocr/README.md)
+
+**推荐替代方案**:
+- **PaddleOCR**: 完善的跨平台 OCR
+- **EasyOCR**: 多语言支持  
+- **Tesseract OCR**: 开源引擎
+
 ## 安装
 
 ### 环境要求
@@ -80,10 +112,12 @@ pip install -r requirements.txt
 /Users/lifeng/data/models/
 ├── models/
 │   └── FunAudioLLM/
-│       └── Fun-ASR-Nano-2512/     # ASR 模型
-└── Qwen/
-    ├── Qwen3-TTS-12Hz-1.7B-CustomVoice/  # TTS 模型
-    └── Qwen3-TTS-Tokenizer-12Hz/          # TTS Tokenizer
+│       └── Fun-ASR-Nano-2512/              # ASR 模型
+├── Qwen/
+│   ├── Qwen3-TTS-12Hz-1.7B-CustomVoice/    # TTS 模型
+│   └── Qwen3-TTS-Tokenizer-12Hz/            # TTS Tokenizer
+└── deepseek-ai/
+    └── DeepSeek-OCR/                        # OCR 模型
 ```
 
 ## 项目结构
@@ -104,9 +138,15 @@ agent-tools/
 │       ├── demo_basic.py
 │       ├── demo_stream.py
 │       └── demo_vad.py
-└── tts/                   # 语音合成模块
+├── tts/                   # 语音合成模块
+│   ├── __init__.py
+│   ├── qwen_tts.py        # 主接口
+│   ├── README.md
+│   └── examples/
+│       └── demo_basic.py
+└── ocr/                   # 光学字符识别模块
     ├── __init__.py
-    ├── qwen_tts.py        # 主接口
+    ├── deepseek_ocr.py    # 主接口
     ├── README.md
     └── examples/
         └── demo_basic.py
@@ -159,10 +199,29 @@ tts.speak_with_emotion(
 )
 ```
 
+### 光学字符识别
+
+```python
+from ocr import DeepSeekOCR
+
+# 初始化
+ocr = DeepSeekOCR()
+
+# 识别图像
+result = ocr.recognize("document.jpg", prompt_type="markdown")
+print(result)
+
+# 识别 PDF
+results = ocr.recognize_pdf("document.pdf")
+for i, result in enumerate(results):
+    print(f"第 {i+1} 页: {result}")
+```
+
 ## 参考
 
 - [Fun-ASR GitHub](https://github.com/FunAudioLLM/Fun-ASR)
 - [Qwen3-TTS GitHub](https://github.com/QwenLM/Qwen3-TTS)
+- [DeepSeek-OCR GitHub](https://github.com/deepseek-ai/DeepSeek-OCR)
 - [ModelScope](https://modelscope.cn)
 
 ## 许可证
