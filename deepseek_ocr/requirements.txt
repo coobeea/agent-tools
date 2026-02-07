@@ -1,0 +1,29 @@
+# DeepSeek-OCR-2 依赖清单
+# Python 3.8+
+
+# PyTorch (根据系统选择安装命令)
+# CPU: pip install torch torchvision torchaudio -i https://pypi.tuna.tsinghua.edu.cn/simple
+# CUDA: pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Transformers (重要: DeepSeek-OCR-2 需要 4.46.3 或更高)
+transformers>=4.46.3
+
+# 图像处理
+pillow>=9.0.0
+pdf2image>=1.16.0
+
+# 模型加载
+modelscope>=1.9.0
+
+# 模型依赖（DeepSeek-OCR-2 模型内部需要）
+addict>=2.0.0
+easydict>=1.0.0
+matplotlib>=3.0.0
+timm>=0.9.0
+einops>=0.6.0
+
+# 其他依赖
+numpy>=1.21.0

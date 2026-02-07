@@ -1,6 +1,43 @@
-node_modules/
-dist/
+# Python
 __pycache__/
-.DS_Store
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 虚拟环境
 .venv/
-paddleocr_vl/paddleocr_env/
+venv/
+ENV/
+env/
+deepseek_env/
+glm_env/
+paddleocr_env/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# 模型和数据（已在外部）
+*.pth
+*.pt
+*.bin
+*.onnx
+*.safetensors
+
+# 日志
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints
+
+# 测试输出
+test_output/
+temp/
+tmp/

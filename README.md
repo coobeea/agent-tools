@@ -1,229 +1,205 @@
 # Agent Tools
 
-AI Agent 工具集，包含语音识别（ASR）、语音合成（TTS）和光学字符识别（OCR）模块。
+AI Agent 工具集合，包含语音识别（ASR）、语音合成（TTS）、光学字符识别（OCR）等功能。
 
-## 模块
+## 📦 项目结构
 
-### ASR - 语音识别
-
-基于 [Fun-ASR-Nano-2512](https://modelscope.cn/models/FunAudioLLM/Fun-ASR-Nano-2512) 的语音识别模块。
-
-**特性:**
-- 中文、英文、日文语音识别
-- 中文 7 种方言和 26 种地域口音支持
-- 热词增强
-- 实时流式识别
-- VAD 语音端点检测
-
-```python
-from asr import FunASR
-
-asr = FunASR()
-result = asr.transcribe("audio.wav", language="中文")
-print(result)
+```
+agent-tools/
+├── asr/              # 语音识别模块 (Fun-ASR-Nano)
+├── tts/              # 语音合成模块 (Qwen3-TTS)
+├── deepseek_ocr/     # OCR 模块 (DeepSeek-OCR-2)
+├── glm_ocr/          # OCR 模块 (GLM-OCR)
+└── requirements.txt  # 全局依赖（不推荐使用）
 ```
 
-详细文档: [asr/README.md](asr/README.md)
+## 🔧 环境说明
 
-### TTS - 语音合成
+**重要**: 每个模块都有独立的虚拟环境，避免依赖冲突！
 
-基于 [Qwen3-TTS-12Hz-1.7B-CustomVoice](https://modelscope.cn/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice) 的语音合成模块。
+### 为什么需要独立环境？
 
-**特性:**
-- 9 种预设音色
-- 10 种语言支持
-- 指令控制（情感、语速、音调等）
-- 超低延迟流式生成
+不同模块对 `transformers` 版本有不同要求：
 
-```python
-from tts import QwenTTS
+| 模块 | transformers 版本 | 虚拟环境 |
+|------|------------------|---------|
+| ASR | >= 4.40.0 | 使用全局环境 |
+| TTS | >= 4.57.3 | 使用全局环境 |
+| DeepSeek-OCR | == 4.46.3 | ✅ `deepseek_env` |
+| GLM-OCR | >= 5.0.0 (dev) | ✅ `glm_env` |
 
-tts = QwenTTS()
-tts.speak("你好，世界！", speaker="Vivian", output_path="output.wav")
-```
+## 🚀 快速开始
 
-详细文档: [tts/README.md](tts/README.md)
-
-### OCR - 光学字符识别 ⚠️
-
-基于 [DeepSeek-OCR-2](https://modelscope.cn/models/deepseek-ai/DeepSeek-OCR-2) 的文字识别模块。
-
-**⚠️ 重要**: 
-- 需要 `transformers==4.46.3`（与 TTS 的 4.57.3 冲突）
-- 建议为 OCR 创建独立环境
-- 官方模型需要修复才能在 CPU/MPS 上运行
-
-**特性:**
-- 图像 OCR 识别
-- PDF 文档识别
-- 文档转 Markdown
-- 图表解析
-- 批量处理
-
-```python
-from ocr import DeepSeekOCR
-
-# 使用本地已修复的模型
-ocr = DeepSeekOCR(use_local_model=True)
-result = ocr.recognize("document.jpg", prompt_type="markdown")
-print(result)
-```
-
-详细文档: [ocr/README.md](ocr/README.md)
-
-**推荐替代方案**:
-- **PaddleOCR**: 完善的跨平台 OCR
-- **EasyOCR**: 多语言支持  
-- **Tesseract OCR**: 开源引擎
-
-## 安装
-
-### 环境要求
-
-- Python 3.12（推荐使用虚拟环境）
-- macOS / Linux / Windows
-- GPU（可选，推荐用于加速）
-
-### 创建虚拟环境
+### 1. ASR 语音识别
 
 ```bash
-# 使用 pyenv
-pyenv install 3.12.12
-cd /path/to/agent-tools
-~/.pyenv/versions/3.12.12/bin/python -m venv .venv
-source .venv/bin/activate
-
-# 或使用 conda
-conda create -n agent-tools python=3.12 -y
-conda activate agent-tools
+cd asr
+pip install -r ../requirements.txt  # 或使用全局环境
+python examples/demo_basic.py
 ```
 
-### 安装依赖
+**模型位置**: `/Users/lifeng/data/models/iic/speech_charctc_kws_phone-xiaoyun`
+
+### 2. TTS 语音合成
+
+```bash
+cd tts
+pip install -r ../requirements.txt  # 或使用全局环境
+python examples/demo_basic.py
+```
+
+**模型位置**: `/Users/lifeng/data/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice`
+
+### 3. DeepSeek-OCR 光学字符识别
+
+```bash
+cd deepseek_ocr
+
+# 一键安装
+bash setup_env.sh
+
+# 激活环境
+source deepseek_env/bin/activate
+
+# 运行测试
+python examples/demo_basic.py
+```
+
+**模型位置**: `/Users/lifeng/data/models/deepseek-ai/DeepSeek-OCR-2`
+
+**重要**: DeepSeek-OCR-2 需要手动修复模型文件才能在 CPU 上运行！详见 [deepseek_ocr/INSTALL.md](./deepseek_ocr/INSTALL.md)
+
+### 4. GLM-OCR 光学字符识别
+
+```bash
+cd glm_ocr
+
+# 一键安装
+bash setup_env.sh
+
+# 激活环境
+source glm_env/bin/activate
+
+# 运行测试
+python test_glm_ocr.py
+```
+
+**模型位置**: `/Users/lifeng/data/models/GLM-OCR`
+
+## 📊 模块对比
+
+### OCR 模块对比
+
+| 特性 | DeepSeek-OCR-2 | GLM-OCR |
+|------|---------------|---------|
+| **参数量** | 未知 | 0.9B |
+| **加载时间** | 6秒 | **2.2秒** ⚡ |
+| **推理速度** | **30秒/页** ⚡ | 82.8秒/页 |
+| **准确率** | ⭐⭐⭐⭐ | **⭐⭐⭐⭐⭐** |
+| **设备支持** | CPU (需修复) | CPU / GPU |
+| **输出格式** | MD / TXT | MD / TXT |
+| **安装难度** | ⚠️ 需要修复模型 | ✅ 简单 |
+| **推荐场景** | 速度优先 | 准确率优先 |
+
+### 推荐选择
+
+- **速度优先**: DeepSeek-OCR-2（修复后）
+- **准确率优先**: GLM-OCR（OmniDocBench V1.5 第一名）
+- **生产环境**: GLM-OCR（更稳定）
+
+## 📝 依赖管理
+
+### 全局依赖 (requirements.txt)
+
+适用于 ASR 和 TTS 模块：
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 模型存储
+### 独立环境依赖
 
-所有模型默认下载到 `/Users/lifeng/data/models` 目录：
+每个 OCR 模块都有独立的 `requirements.txt`：
 
-```
-/Users/lifeng/data/models/
-├── models/
-│   └── FunAudioLLM/
-│       └── Fun-ASR-Nano-2512/              # ASR 模型
-├── Qwen/
-│   ├── Qwen3-TTS-12Hz-1.7B-CustomVoice/    # TTS 模型
-│   └── Qwen3-TTS-Tokenizer-12Hz/            # TTS Tokenizer
-└── deepseek-ai/
-    └── DeepSeek-OCR/                        # OCR 模型
-```
+- `deepseek_ocr/requirements.txt` - DeepSeek-OCR-2 依赖
+- `glm_ocr/requirements.txt` - GLM-OCR 依赖
 
-## 项目结构
+## 🛠️ 安装指南
 
-```
-agent-tools/
-├── README.md
-├── requirements.txt
-├── .venv/                 # Python 3.12 虚拟环境
-├── asr/                   # 语音识别模块
-│   ├── __init__.py
-│   ├── fun_asr.py         # 主接口
-│   ├── model.py           # 核心模型
-│   ├── ctc.py
-│   ├── tools/
-│   │   └── utils.py
-│   └── examples/
-│       ├── demo_basic.py
-│       ├── demo_stream.py
-│       └── demo_vad.py
-├── tts/                   # 语音合成模块
-│   ├── __init__.py
-│   ├── qwen_tts.py        # 主接口
-│   ├── README.md
-│   └── examples/
-│       └── demo_basic.py
-└── ocr/                   # 光学字符识别模块
-    ├── __init__.py
-    ├── deepseek_ocr.py    # 主接口
-    ├── README.md
-    └── examples/
-        └── demo_basic.py
+### 方案 1: 全局安装（ASR + TTS）
+
+```bash
+# 创建全局虚拟环境
+python3 -m venv .venv
+source .venv/bin/activate
+
+# 安装依赖
+pip install -r requirements.txt
 ```
 
-## 快速开始
+### 方案 2: 独立安装（推荐用于 OCR）
 
-### 语音识别
-
-```python
-from asr import FunASR
-
-# 初始化
-asr = FunASR()
-
-# 识别音频
-result = asr.transcribe("audio.wav", language="中文")
-print(result)
-
-# 使用热词
-result = asr.transcribe(
-    "meeting.wav",
-    language="中文",
-    hotwords=["人工智能", "深度学习"],
-)
+**DeepSeek-OCR**:
+```bash
+cd deepseek_ocr
+bash setup_env.sh
 ```
 
-### 语音合成
-
-```python
-from tts import QwenTTS
-
-# 初始化
-tts = QwenTTS()
-
-# 生成语音
-tts.speak(
-    text="你好，我是语音合成模型！",
-    speaker="Vivian",
-    language="Chinese",
-    output_path="output.wav",
-)
-
-# 带情感控制
-tts.speak_with_emotion(
-    text="今天真是太开心了！",
-    emotion="开心",
-    speaker="Serena",
-    output_path="happy.wav",
-)
+**GLM-OCR**:
+```bash
+cd glm_ocr
+bash setup_env.sh
 ```
 
-### 光学字符识别
+## 📖 详细文档
 
-```python
-from ocr import DeepSeekOCR
+### DeepSeek-OCR-2
 
-# 初始化
-ocr = DeepSeekOCR()
+- [README.md](./deepseek_ocr/README.md) - 完整文档
+- [INSTALL.md](./deepseek_ocr/INSTALL.md) - 安装指南
+- [FIX_GUIDE.md](./deepseek_ocr/FIX_GUIDE.md) - 快速修复指南
+- [TROUBLESHOOTING.md](./deepseek_ocr/TROUBLESHOOTING.md) - 故障排查
+- [SUMMARY.md](./deepseek_ocr/SUMMARY.md) - CPU 修复总结
 
-# 识别图像
-result = ocr.recognize("document.jpg", prompt_type="markdown")
-print(result)
+### GLM-OCR
 
-# 识别 PDF
-results = ocr.recognize_pdf("document.pdf")
-for i, result in enumerate(results):
-    print(f"第 {i+1} 页: {result}")
+- [README.md](./glm_ocr/README.md) - 完整文档
+
+## ⚠️ 重要提示
+
+### DeepSeek-OCR-2 CPU 修复
+
+DeepSeek-OCR-2 官方模型存在 CPU 兼容性问题，需要手动修复：
+
+```bash
+# 自动修复（推荐）
+bash fix_deepseek_ocr.sh
+
+# 或查看详细修复步骤
+cat deepseek_ocr/FIX_GUIDE.md
 ```
 
-## 参考
+**修复内容**:
+1. Flash Attention 2 兼容性
+2. CUDA 硬编码问题
+3. BFloat16 类型转换
+4. Config 配置修正
 
-- [Fun-ASR GitHub](https://github.com/FunAudioLLM/Fun-ASR)
-- [Qwen3-TTS GitHub](https://github.com/QwenLM/Qwen3-TTS)
-- [DeepSeek-OCR GitHub](https://github.com/deepseek-ai/DeepSeek-OCR)
-- [ModelScope](https://modelscope.cn)
+### 版本冲突处理
 
-## 许可证
+如果遇到 `transformers` 版本冲突：
 
-本项目遵循原始项目的许可证。
+1. 使用独立虚拟环境（已配置）
+2. 不要混用全局环境和独立环境
+3. 激活正确的环境后再运行代码
+
+## 🔗 参考链接
+
+- [Fun-ASR-Nano](https://modelscope.cn/models/FunAudioLLM/Fun-ASR-Nano-2512)
+- [Qwen3-TTS](https://modelscope.cn/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice)
+- [DeepSeek-OCR-2](https://modelscope.cn/models/deepseek-ai/DeepSeek-OCR-2)
+- [GLM-OCR](https://modelscope.cn/models/ZhipuAI/GLM-OCR)
+
+## 📄 License
+
+MIT License
