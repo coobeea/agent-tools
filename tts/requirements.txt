@@ -1,0 +1,20 @@
+# PyTorch (根据系统选择合适的版本)
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# Transformers (TTS 可以用较新版本)
+transformers>=4.57.3
+
+# 模型加载
+modelscope>=1.9.0
+
+# 语音处理
+soundfile>=0.12.0
+librosa>=0.10.0
+
+# Qwen-TTS 核心依赖
+qwen-tts>=0.1.0
+
+# 其他依赖
+numpy>=1.21.0
+scipy>=1.7.0

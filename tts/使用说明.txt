@@ -1,0 +1,53 @@
+# Qwen3-TTS 简单使用
+
+## 1. 安装环境（首次使用）
+
+cd /Users/lifeng/git/git_agents/agent-tools/tts
+bash setup_env.sh
+
+## 2. 语音合成（一行命令）
+
+在任何目录下都可以直接调用：
+
+/Users/lifeng/git/git_agents/agent-tools/tts/tts_speak.sh "要说的话" 输出文件.wav
+
+## 示例
+
+# 中文语音
+/Users/lifeng/git/git_agents/agent-tools/tts/tts_speak.sh "你好，世界！" output.wav
+
+# 指定音色
+/Users/lifeng/git/git_agents/agent-tools/tts/tts_speak.sh "今天天气真好" output.wav Serena
+
+# 英文语音
+/Users/lifeng/git/git_agents/agent-tools/tts/tts_speak.sh "Hello World" output.wav Ryan English
+
+# 在 tts 目录下
+cd /Users/lifeng/git/git_agents/agent-tools/tts
+./tts_speak.sh "测试" test.wav
+
+## 可用音色
+
+中文:
+  - Vivian: 明亮、年轻女声
+  - Serena: 温暖、温柔女声
+  - Uncle_Fu: 成熟低沉男声
+  - Dylan: 年轻北京男声
+  - Eric: 活泼成都男声
+
+英文:
+  - Ryan: 动感男声
+  - Aiden: 阳光美式男声
+
+其他:
+  - Ono_Anna: 日本女声
+  - Sohee: 韩国女声
+
+## 优点
+
+- ✅ 不需要手动激活虚拟环境
+- ✅ 在任何目录下都能调用
+- ✅ 自动使用正确的 Python 环境
+- ✅ 支持多种音色和语言
+
+## 就这么简单！

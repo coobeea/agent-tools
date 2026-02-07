@@ -8,7 +8,7 @@
     >>> tts.speak("你好，世界！", output_path="output.wav")
 """
 
-from .qwen_tts import (
+from .tts_wrapper import (
     QwenTTS,
     speak,
     SUPPORTED_SPEAKERS,

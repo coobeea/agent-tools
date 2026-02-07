@@ -10,6 +10,8 @@ __pycache__/
 venv/
 ENV/
 env/
+asr_env/
+tts_env/
 deepseek_env/
 glm_env/
 paddleocr_env/

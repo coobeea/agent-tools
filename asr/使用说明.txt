@@ -1,0 +1,39 @@
+# Fun-ASR 简单使用
+
+## 1. 安装环境（首次使用）
+
+cd /Users/lifeng/git/git_agents/agent-tools/asr
+bash setup_env.sh
+
+## 2. 语音识别（一行命令）
+
+在任何目录下都可以直接调用：
+
+/Users/lifeng/git/git_agents/agent-tools/asr/asr_recognize.sh 音频文件.wav 输出文件.txt
+
+## 示例
+
+# 识别中文音频
+/Users/lifeng/git/git_agents/agent-tools/asr/asr_recognize.sh audio.wav result.txt
+
+# 识别英文音频
+/Users/lifeng/git/git_agents/agent-tools/asr/asr_recognize.sh audio.wav result.txt 英文
+
+# 在 asr 目录下
+cd /Users/lifeng/git/git_agents/agent-tools/asr
+./asr_recognize.sh test.wav output.txt
+
+## 支持语言
+
+- 中文（默认）
+- 英文
+- 日文
+
+## 优点
+
+- ✅ 不需要手动激活虚拟环境
+- ✅ 在任何目录下都能调用
+- ✅ 自动使用正确的 Python 环境
+- ✅ 支持多种语言
+
+## 就这么简单！
