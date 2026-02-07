@@ -1,0 +1,30 @@
+# DeepSeek-OCR 简单使用
+
+## 一行命令识别图片（推荐方式）
+
+在任何目录下都可以直接调用：
+
+/Users/lifeng/git/git_agents/agent-tools/deepseek_ocr/ocr_image.sh 输入图片 输出文件.md
+
+## 示例
+
+# 示例 1：当前目录的图片
+/Users/lifeng/git/git_agents/agent-tools/deepseek_ocr/ocr_image.sh test.jpg result.md
+
+# 示例 2：完整路径
+/Users/lifeng/git/git_agents/agent-tools/deepseek_ocr/ocr_image.sh \
+  /Users/lifeng/data/images/page_001.png \
+  output.md
+
+# 示例 3：如果在 deepseek_ocr 目录下
+cd /Users/lifeng/git/git_agents/agent-tools/deepseek_ocr
+./ocr_image.sh test.jpg result.md
+
+## 优点
+
+- ✅ 不需要手动激活虚拟环境
+- ✅ 在任何目录下都能调用
+- ✅ 自动使用正确的 Python 环境
+- ✅ 输出纯净的 Markdown 格式
+
+## 就这么简单！
