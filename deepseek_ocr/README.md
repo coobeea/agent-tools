@@ -9,6 +9,9 @@
 - ✅ **文档转 Markdown**: 将文档图像转换为结构化 Markdown
 - ✅ **图表解析**: 解析图表、表格等复杂结构
 - ✅ **批量处理**: 支持批量图像识别
+- ✅ **多种输出格式**: 支持 Markdown、纯文本、结构化输出（见 [FORMAT_GUIDE.md](./FORMAT_GUIDE.md)）
+- ✅ **5 种识别模式**: markdown、ocr、free_ocr、parse_figure、describe
+- ✅ **输出格式化工具**: 自动清理标注标签，生成纯净输出
 - ✅ **多种分辨率模式**: Tiny/Small/Base/Large 四种模式
 - ✅ **自定义提示词**: 灵活的提示词控制
 - ✅ **GPU 加速**: 支持 CUDA/MPS 加速
@@ -353,6 +356,15 @@ ocr = DeepSeekOCR(base_size=1280, image_size=1024)
 首次运行需要从 ModelScope 下载模型（约 3-4GB），请耐心等待。后续运行会直接加载本地缓存的模型。
 
 ## 参考
+
+### 📚 项目文档
+
+- **[FORMAT_GUIDE.md](./FORMAT_GUIDE.md)** - 输出格式完整指南（Markdown、纯文本、结构化输出）
+- **[INSTALL.md](./INSTALL.md)** - 详细安装指南
+- **[FIX_GUIDE.md](./FIX_GUIDE.md)** - 环境修复指南
+- **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)** - 常见问题排查
+
+### 🔗 外部资源
 
 - [DeepSeek-OCR ModelScope](https://modelscope.cn/models/deepseek-ai/DeepSeek-OCR)
 - [DeepSeek-OCR GitHub](https://github.com/deepseek-ai/DeepSeek-OCR)
